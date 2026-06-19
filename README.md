@@ -10,7 +10,7 @@
 **Plataforma full-stack para descubrir certificaciones tecnológicas, seguir roadmaps de carrera y gestionar tu propia formación.**
 Cloud · Ciberseguridad · Redes · Linux · DevOps · IA · Desarrollo — España, Europa y mundial.
 
-🔗 **Demo en vivo:** _pendiente de desplegar — la URL irá aquí_ · 💻 **Stack:** Next.js · NestJS · Prisma · PostgreSQL
+🔗 **Demo en vivo:** **[certpath-web-production.up.railway.app](https://certpath-web-production.up.railway.app)** · 💻 **Stack:** Next.js · NestJS · Prisma · PostgreSQL
 
 > Proyecto personal full-stack (monorepo): herramienta real para planificar mi carrera en infraestructuras y ciberseguridad, y pieza central de mi portfolio.
 

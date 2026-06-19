@@ -15,7 +15,7 @@ import {
 
 // URL de "Invítame a un café" (configúrala en Vercel con NEXT_PUBLIC_COFFEE_URL)
 const COFFEE_URL =
-  process.env.NEXT_PUBLIC_COFFEE_URL || "https://www.buymeacoffee.com";
+  process.env.NEXT_PUBLIC_COFFEE_URL || "https://buymeacoffee.com/samuelaguilar";
 
 const NAV = [
   { href: "/", label: "Inicio", icon: LayoutGrid },

@@ -10,7 +10,12 @@ import {
   Link2,
   BarChart3,
   Settings,
+  Coffee,
 } from "lucide-react";
+
+// URL de "Invítame a un café" (configúrala en Vercel con NEXT_PUBLIC_COFFEE_URL)
+const COFFEE_URL =
+  process.env.NEXT_PUBLIC_COFFEE_URL || "https://www.buymeacoffee.com";
 
 const NAV = [
   { href: "/", label: "Inicio", icon: LayoutGrid },
@@ -59,6 +64,16 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
           );
         })}
       </nav>
+      <div className="px-3 pb-2">
+        <a
+          href={COFFEE_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-center gap-2 rounded-md bg-amber-400 px-3 py-2 text-sm font-medium text-amber-950 transition hover:bg-amber-300"
+        >
+          <Coffee size={16} /> Invítame a un café
+        </a>
+      </div>
       <div className="border-t border-slate-800 px-5 py-4 text-xs text-slate-500">
         Plataforma de certificaciones
         <br />y roadmaps técnicos

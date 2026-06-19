@@ -21,6 +21,9 @@ prisma/*.db
 # Logs
 *.log
 
+# Artefacto de migración de datos (no es código)
+data-export.json
+
 # Lanzador local (Windows, ruta personal)
 start-certpath.bat
 

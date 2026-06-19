@@ -17,13 +17,13 @@ Cloud · Ciberseguridad · Redes · Linux · DevOps · IA · Desarrollo — Espa
 ## 📸 Pantallas
 
 - **Inicio** — catálogo por categorías, estadísticas y roadmaps/certis destacadas.
-- <img width="2560" height="1600" alt="certpath-1-inicio" src="https://github.com/user-attachments/assets/961f23d6-544f-406a-af9e-69f601f5a83f" />
+<img width="2560" height="1600" alt="certpath-1-inicio" src="https://github.com/user-attachments/assets/961f23d6-544f-406a-af9e-69f601f5a83f" />
 
 - **Roadmap (vista Mapa)** — grafo 2D por secciones con nodos, conectores y estado por paso.
-- <img width="2560" height="1600" alt="certpath-3-roadmaps" src="https://github.com/user-attachments/assets/ea3f8fbf-22ad-48d9-bb29-bf60b20df91c" />
+<img width="2560" height="1600" alt="certpath-3-roadmaps" src="https://github.com/user-attachments/assets/ea3f8fbf-22ad-48d9-bb29-bf60b20df91c" />
 
 - **Ficha de certificación** — descripción, roles a los que prepara, salidas profesionales, competencias y logo.
-- <img width="2560" height="1600" alt="certpath-2-certificaciones" src="https://github.com/user-attachments/assets/81c3a119-fe99-4153-a84d-b90d490f234b" />
+<img width="2560" height="1600" alt="certpath-2-certificaciones" src="https://github.com/user-attachments/assets/81c3a119-fe99-4153-a84d-b90d490f234b" />
 
 - **Mi progreso** — seguimiento de certificaciones, roadmaps, lecturas y objetivos.
 

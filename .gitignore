@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Builds
+.next/
+out/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Entorno y secretos (NUNCA subir)
+.env
+.env.*
+!.env.example
+
+# Base de datos local (SQLite)
+*.db
+*.db-journal
+prisma/*.db
+
+# Logs
+*.log
+
+# Lanzador local (Windows, ruta personal)
+start-certpath.bat
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,66 @@
+# Stack completo de CertPath.
+#   docker compose -f infra/docker-compose.yml up --build        (api + web, SQLite)
+#   docker compose -f infra/docker-compose.yml --profile full up  (+ Postgres + Adminer)
+#
+# Por defecto la API usa SQLite en un volumen (cero configuración).
+# Para Postgres: cambia `provider = "postgresql"` en prisma/schema.prisma,
+# y en la API pon DATABASE_URL=postgresql://ckp:ckp_dev_pwd@postgres:5432/ckp
+services:
+  api:
+    build:
+      context: ../apps/api
+    container_name: ckp_api
+    restart: unless-stopped
+    environment:
+      PORT: "4000"
+      DATABASE_URL: "file:/data/prod.db"
+      IMPORT_TOKEN: "${IMPORT_TOKEN:-certpath-admin-2026}"
+      ADMIN_EMAIL: "${ADMIN_EMAIL:-admin@certpath.local}"
+      ADMIN_PASSWORD_HASH: "${ADMIN_PASSWORD_HASH:-}"
+      AUTH_SECRET: "${AUTH_SECRET:-}"
+    volumes:
+      - apidata:/data
+    ports:
+      - "4000:4000"
+
+  web:
+    build:
+      context: ../apps/web
+      args:
+        NEXT_PUBLIC_API_URL: "http://localhost:4000/api"
+    container_name: ckp_web
+    restart: unless-stopped
+    environment:
+      # Fetch del lado servidor (contenedor → contenedor)
+      API_URL: "http://api:4000/api"
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+
+  # ── Opcional: base de datos para producción (perfil "full") ──
+  postgres:
+    image: postgres:16-alpine
+    container_name: ckp_postgres
+    restart: unless-stopped
+    profiles: ["full"]
+    environment:
+      POSTGRES_USER: ckp
+      POSTGRES_PASSWORD: ckp_dev_pwd
+      POSTGRES_DB: ckp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer:latest
+    container_name: ckp_adminer
+    restart: unless-stopped
+    profiles: ["full"]
+    ports:
+      - "8080:8080"
+
+volumes:
+  apidata:
+  pgdata:

@@ -1,0 +1,7 @@
+Coloca aquí tus archivos PDF o EPUB.
+
+Luego, al añadir un libro, pon en "Archivo PDF/EPUB" la ruta:
+  /libros/nombre-del-archivo.pdf
+  /libros/nombre-del-archivo.epub
+
+Se abrirán en el lector integrado de la aplicación.

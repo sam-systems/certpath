@@ -1,0 +1,127 @@
+// Para N7 real: cambiar provider a "postgresql" y DATABASE_URL a Postgres.
+// El resto del código NO cambia (Prisma abstrae la BD).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Vendor {
+  id             String          @id @default(cuid())
+  name           String          @unique
+  certifications Certification[]
+}
+
+model Category {
+  id             String          @id @default(cuid())
+  name           String          @unique
+  domain         String
+  certifications Certification[]
+}
+
+model Certification {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  code          String?
+  level         String // fundamentos | associate | professional | expert | specialty
+  cost          String // gratis | pago
+  priceEUR      Int?
+  url           String
+  prepHours     Int?
+  validityYears Int?
+  demand        String // media | alta | muy-alta
+  skills        String // JSON (SQLite no soporta arrays)
+
+  // Ficha informativa (para qué sirve / a quién va dirigida / salidas)
+  logoUrl        String? // logo o icono del fabricante/certificación (manual; si no, se deriva del vendor)
+  description    String? // qué es y para qué sirve
+  targetRoles    String? // JSON: roles a los que prepara
+  careerOutcomes String? // JSON: salidas profesionales / puestos
+  prereqs        String? // requisitos / a quién va dirigida
+
+  vendor     Vendor   @relation(fields: [vendorId], references: [id])
+  vendorId   String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  @@index([categoryId])
+  @@index([vendorId])
+}
+
+model Roadmap {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  title       String
+  role        String
+  description String
+  domain      String
+  estMonths   Int
+  estCostEUR  Int
+  difficulty  String
+  salaryRange String?
+  steps       String // JSON
+}
+
+// Progreso del usuario sobre cada certificación (pendiente / en-progreso / obtenida)
+model Progress {
+  id        String   @id @default(cuid())
+  certSlug  String   @unique
+  status    String // pendiente | en-progreso | obtenida
+  notes     String?
+  updatedAt DateTime @updatedAt
+}
+
+// Progreso de lectura de un libro (pendiente / leyendo / leido + página actual)
+model BookProgress {
+  id          String   @id @default(cuid())
+  bookSlug    String   @unique
+  status      String // pendiente | leyendo | leido
+  currentPage Int?
+  updatedAt   DateTime @updatedAt
+}
+
+// Libros (lecturas + enlace de compra)
+model Book {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  author    String
+  publisher String?
+  pages     Int?
+  domain    String // rama / temática (cloud, ciberseguridad, redes…)
+  level     String // principiante | intermedio | avanzado
+  audience  String // estudiante | profesional | ambos
+  tags      String // JSON
+  buyUrl    String?
+  fileUrl   String? // PDF o EPUB para leer en la app
+  summary   String?
+  isbn      String? // ISBN-13/10 (para autocompletar la ficha)
+  coverUrl  String? // portada (Google Books / Open Library)
+  updatedAt DateTime @updatedAt
+}
+
+// Enlaces / recursos importantes (normativa, guías, portales oficiales…)
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  url         String   @unique
+  description String?
+  category    String   @default("General") // ENS, Normativa, Guías, Formación…
+  createdAt   DateTime @default(now())
+}
+
+// Blog / Guías
+model Article {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  summary   String
+  content   String // markdown
+  category  String
+  author    String   @default("CertPath")
+  updatedAt DateTime @updatedAt
+}

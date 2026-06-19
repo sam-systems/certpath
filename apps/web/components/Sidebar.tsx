@@ -9,7 +9,6 @@ import {
   BookOpen,
   Link2,
   BarChart3,
-  Settings,
   Coffee,
 } from "lucide-react";
 
@@ -24,7 +23,6 @@ const NAV = [
   { href: "/libros", label: "Libros", icon: BookOpen },
   { href: "/recursos", label: "Recursos", icon: Link2 },
   { href: "/dashboard", label: "Mi progreso", icon: BarChart3 },
-  { href: "/admin", label: "Admin", icon: Settings },
 ];
 
 export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {

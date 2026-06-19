@@ -12,10 +12,13 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const token = await this.auth.login(body?.email, body?.password);
+    // En producción la web y la API están en dominios distintos → la cookie debe ser
+    // SameSite=None + Secure para que el navegador la envíe en peticiones cross-site.
+    const isProd = process.env.NODE_ENV === "production";
     res.cookie("session", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -24,7 +27,12 @@ export class AuthController {
 
   @Post("logout")
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie("session", { path: "/" });
+    const isProd = process.env.NODE_ENV === "production";
+    res.clearCookie("session", {
+      path: "/",
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
+    });
     return { ok: true };
   }
 

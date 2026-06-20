@@ -3,6 +3,10 @@ import "./globals.css";
 import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://certpath-web-production.up.railway.app",
+  ),
   title: {
     default: "CertPath — Certificaciones y roadmaps tecnológicos",
     template: "%s · CertPath",

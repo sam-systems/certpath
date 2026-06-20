@@ -41,6 +41,20 @@ docker compose -f infra/docker-compose.yml --profile full up --build
 - [ ] `ADMIN_PASSWORD_HASH` generado con bcrypt (no contraseña en claro).
 - [ ] HTTPS en web y API (lo dan Vercel/Railway por defecto).
 
+## Migrar a Render (gratis) — antes de que caduque la prueba de Railway
+
+El repo incluye un **blueprint** (`render.yaml`) listo para desplegar la API en el plan
+gratuito de Render sin volver a configurarla a mano:
+
+1. **render.com** → **New +** → **Blueprint** → conecta el repo `certpath`.
+2. Render lee `render.yaml` y crea el servicio `certpath-api` (Docker, plan free, healthcheck `/api/health`).
+3. Rellena los secretos (`DATABASE_URL` de Neon, `IMPORT_TOKEN`, `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, `AUTH_SECRET`, `ALLOWED_ORIGINS`).
+4. **Deploy.** La base de datos sigue en **Neon** (no se migra).
+5. Actualiza en la **web** (Vercel/Railway) `NEXT_PUBLIC_API_URL` y `API_URL` a la nueva URL de Render, y ajusta `ALLOWED_ORIGINS` de la API al dominio de la web.
+
+> El plan free de Render "duerme" tras ~15 min de inactividad (arranque en frío de ~30-60 s).
+> Para evitarlo, un *cron* externo (p. ej. UptimeRobot) que haga ping a `/api/health` cada 10 min.
+
 ## CI/CD
 `.github/workflows/ci.yml` ejecuta en cada push/PR: build del API, typecheck+build del web,
 tests, y build de las imágenes Docker.

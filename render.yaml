@@ -1,0 +1,34 @@
+# Blueprint de Render (Infrastructure as Code) — API de CertPath, plan GRATIS.
+#
+# Para migrar desde Railway (antes de que caduque la prueba):
+#   1. render.com → New + → Blueprint → conecta el repo `certpath`.
+#   2. Render lee este fichero y crea el servicio `certpath-api`.
+#   3. Rellena los secretos marcados con `sync: false` (los mismos que en Railway).
+#   4. Deploy. La base de datos sigue en Neon (Postgres) — no se toca.
+#
+# Nota: el plan free "duerme" tras ~15 min sin tráfico (arranque en frío de ~30-60 s).
+services:
+  - type: web
+    name: certpath-api
+    runtime: docker
+    rootDir: apps/api
+    dockerfilePath: ./Dockerfile
+    region: frankfurt
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false # cadena de Neon (Postgres)
+      - key: IMPORT_TOKEN
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false # hash bcrypt, nunca contraseña en claro
+      - key: AUTH_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false # dominio público de la web (CORS)
